@@ -175,67 +175,76 @@ export default function Home() {
       </div>
 
       {/* LOADER */}
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-          >
-            <div className="bg-white p-10 rounded-2xl w-96 text-center shadow-xl">
-              <h3 className="text-xl font-semibold mb-4">
-                Updating Portfolio
-              </h3>
-              <p className="text-gray-600 mb-4">{statusText}</p>
+<AnimatePresence>
+  {loading && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-gradient-to-br from-blue-900 to-gray-900 flex items-center justify-center z-50"
+    >
+      <div className="bg-white/10 backdrop-blur-lg p-10 rounded-3xl w-96 text-center shadow-2xl border border-white/20">
 
-              <div className="h-2 bg-gray-200 rounded-full">
-                <div
-                  className="h-2 bg-blue-900 rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
+        <h3 className="text-2xl font-bold text-white mb-4">
+          Updating Portfolio
+        </h3>
 
-              <p className="mt-4 text-sm text-gray-500">
-                {progress}%
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <p className="text-gray-200 mb-6">{statusText}</p>
 
+        <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+          <div
+            className="h-2 bg-white rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+
+        <p className="mt-4 text-sm text-gray-300">
+          {progress}%
+        </p>
+
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
       {/* TOAST */}
-      <AnimatePresence>
-        {showToast && (
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            className="fixed bottom-6 right-6 bg-blue-900 text-white p-6 rounded-xl shadow-xl w-80 z-50"
+<AnimatePresence>
+  {showToast && (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
+      <div className="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center border border-gray-100">
+        <h4 className="text-xl font-bold text-blue-900 mb-4">
+          Project Successfully Added!
+        </h4>
+
+        <p className="text-gray-600 mb-6">
+          Your portfolio has been updated and deployed.
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => setShowToast(false)}
+            className="px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition"
           >
-            <h4 className="font-semibold mb-3">
-              Project Successfully Added
-            </h4>
+            Close
+          </button>
 
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowToast(false)}
-                className="px-3 py-2 bg-white text-blue-900 rounded-md text-sm"
-              >
-                OK
-              </button>
-
-              <a
-                href="https://github.com/RabiaHameedKhan/portfolio-test"
-                target="_blank"
-                className="px-3 py-2 bg-white text-blue-900 rounded-md text-sm text-center"
-              >
-                View Repository
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <a
+            href="https://github.com/RabiaHameedKhan/portfolio-test"
+            target="_blank"
+            className="px-4 py-2 border border-blue-900 text-blue-900 rounded-lg hover:bg-blue-50 transition"
+          >
+            View Repo
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
     </div>
   );
