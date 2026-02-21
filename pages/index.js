@@ -9,6 +9,7 @@ export default function Home() {
     image: null,
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image") {
@@ -18,13 +19,43 @@ export default function Home() {
     }
   };
 
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formDataObj = new FormData();
+    formDataObj.append("name", formData.name);
+    formDataObj.append("link", formData.link);
+    formDataObj.append("description", formData.description);
+    formDataObj.append("image", formData.image);
+
+    try {
+      const res = await fetch("/api/addProject", {
+        method: "POST",
+        body: formDataObj,
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Project added successfully!");
+        setFormData({ name: "", link: "", description: "", image: null });
+      } else {
+        alert("Failed to add project: " + data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while adding the project.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
 
       {/* NAVBAR */}
       <div className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-sm z-50">
         <div className="max-w-7xl mx-auto px-8 py-4 flex items-center">
-          <h1 className="text-xl font-bold text-blue-900"> My AI Portfolio Updater</h1>
+          <h1 className="text-xl font-bold text-blue-900">My AI Portfolio Updater</h1>
         </div>
       </div>
 
@@ -73,7 +104,7 @@ export default function Home() {
               Keep your portfolio updated effortlessly.
             </p>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -82,9 +113,10 @@ export default function Home() {
                 <input
                   type="text"
                   name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
-                  placeholder="AI Resume Builder"
+                  className="w-full px-4 py-3 text-black rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
+                  
                 />
               </div>
 
@@ -95,9 +127,10 @@ export default function Home() {
                 <input
                   type="text"
                   name="link"
+                  value={formData.link}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
-                  placeholder="https://yourproject.com"
+                  className="w-full px-4 py-3 text-black rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
+                  
                 />
               </div>
 
@@ -119,10 +152,11 @@ export default function Home() {
                 </label>
                 <textarea
                   name="description"
+                  value={formData.description}
                   onChange={handleChange}
                   rows="3"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
-                  placeholder="Brief description of your project..."
+                  className="w-full px-4 py-3 text-black rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-900 focus:outline-none transition"
+                  
                 ></textarea>
               </div>
 

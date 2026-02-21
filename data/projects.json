@@ -1,0 +1,14 @@
+[
+  {
+    "name": "New Project",
+    "link": "https://car-rent-app-swart.vercel.app/",
+    "description": "A Car rental website ",
+    "image": "./images/1771636034100-project1.jpg"
+  },
+  {
+    "name": "project-test",
+    "link": "https://car-rent-app-swart.vercel.app/",
+    "description": "testing the project update!",
+    "image": "./images/1771636457582-project1.jpg"
+  }
+]
