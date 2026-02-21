@@ -10,5 +10,23 @@
     "link": "https://car-rent-app-swart.vercel.app/",
     "description": "testing the project update!",
     "image": "./images/1771636457582-project1.jpg"
+  },
+  {
+    "name": "Rent-A-Car",
+    "link": "https://car-rent-app-swart.vercel.app/",
+    "description": "",
+    "image": "./images/1771638720805-rentacar.PNG"
+  },
+  {
+    "name": "testproject1",
+    "link": "https://car-rent-app-swart.vercel.app/",
+    "description": "",
+    "image": "./images/1771639607422-rentacar.PNG"
+  },
+  {
+    "name": "testproject3",
+    "link": "https://car-rent-app-swart.vercel.app/",
+    "description": "",
+    "image": "./images/1771640137494-rentacar.PNG"
   }
 ]

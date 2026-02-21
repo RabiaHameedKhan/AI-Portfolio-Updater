@@ -46,6 +46,8 @@ export default async function handler(req, res) {
       imagePath = `./images/${fileName}`;
     }
 
+    
+
     // ===== SAVE LOCALLY TO JSON =====
     const projectsPath = path.join(process.cwd(), "data/projects.json");
     let projects = [];
@@ -87,6 +89,55 @@ export default async function handler(req, res) {
       githubData.content,
       "base64"
     ).toString("utf8");
+
+    // ===== UPLOAD IMAGE TO GITHUB =====
+let githubImageURL = "";
+
+if (imagePath) {
+  const imageContent = fs.readFileSync(path.join(process.cwd(), "public/images", path.basename(imagePath)), { encoding: "base64" });
+  const githubImagePath = `images/${path.basename(imagePath)}`; // root images folder in repo
+
+  // Check if image already exists
+  const imageRes = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/contents/${githubImagePath}`,
+    {
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    }
+  );
+
+  let sha;
+  if (imageRes.ok) {
+    const existingImageData = await imageRes.json();
+    sha = existingImageData.sha; // update existing image
+  }
+
+  // Upload / update image
+  const uploadRes = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/contents/${githubImagePath}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+      body: JSON.stringify({
+        message: `Add/update image for ${name}`,
+        content: imageContent,
+        sha,
+      }),
+    }
+  );
+
+  if (!uploadRes.ok) {
+    throw new Error("Failed to upload image to GitHub");
+  }
+
+  // GitHub raw URL
+  githubImageURL = `https://raw.githubusercontent.com/${owner}/${repo}/main/${githubImagePath}`;
+}
 
     // ===== BUILD NEW PROJECT CARD (MATCH YOUR STRUCTURE EXACTLY) =====
     const newProjectCard = `
